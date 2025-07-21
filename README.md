@@ -8,8 +8,8 @@
   <a href="mailto:vikivikas008@gmail.com">
     <img src="https://img.shields.io/badge/Email-red?logo=gmail&logoColor=white&label=&style=for-the-badge" alt="Email"/>
   </a>
-  <a href="tel:+919663125670">
-    <img src="https://img.shields.io/badge/Call-9663125670-success?logo=whatsapp&logoColor=white&label=&style=for-the-badge" alt="Phone"/>
+<a href="https://wa.me/919663125670" target="_blank">
+    <img src="https://img.shields.io/badge/WhatsApp-Chat-green?logo=whatsapp&logoColor=white&label=&style=for-the-badge" alt="WhatsApp"/>
   </a>
 </p>
 
