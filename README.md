@@ -39,7 +39,7 @@
 
 ## 🏅 Achievements
 
-- <a href="https://user-images.githubusercontent.com/placeholder/trophy.png" target="_blank">
+- <a href="[https://user-images.githubusercontent.com/placeholder/trophy.png](https://github.com/user-attachments/assets/dfa4e4b1-0f19-4c55-8d5b-2d2582025c1b)" target="_blank">
     <img src="https://user-images.githubusercontent.com/placeholder/trophy.png" alt="Runner-Up Trophy" width="28" style="vertical-align:middle;"/>
   </a>
   Runner-up in <b>IDEATHON</b>, BGSIT, Nagamangala
