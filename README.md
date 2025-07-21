@@ -1,5 +1,5 @@
 <h1 align="center">👋 Hi, I'm Vikas S</h1>
-<p align="center">⚡ Electronics and Communication Engineering (ECE) student | Problem Solver | Team Player | Aspiring Innovator ⚡</p>
+<p align="center">⚡ Electronics and Communication Engineering (ECE) student | Website Development Learner | Problem Solver | Team Player ⚡</p>
 
 <p align="center">
   <a href="https://www.linkedin.com/in/vikas-s-76a770266" target="_blank">
@@ -8,10 +8,19 @@
   <a href="mailto:vikivikas008@gmail.com">
     <img src="https://img.shields.io/badge/Email-red?logo=gmail&logoColor=white&label=&style=for-the-badge" alt="Email"/>
   </a>
-<a href="https://wa.me/919663125670" target="_blank">
+  <a href="https://wa.me/919663125670" target="_blank">
     <img src="https://img.shields.io/badge/WhatsApp-Chat-green?logo=whatsapp&logoColor=white&label=&style=for-the-badge" alt="WhatsApp"/>
   </a>
 </p>
+
+---
+
+## 🚀 What I'm Doing Now
+
+- 🌱 **Learning to Build Websites**
+  - Currently exploring the fundamentals of web development, including HTML, CSS, and JavaScript.
+  - Experimenting with modern technologies and AI-driven web tools to gain practical skills.
+  - Passionate about designing and bringing new ideas to life—even as a beginner!
 
 ---
 
@@ -28,6 +37,7 @@
 
 - C, C++, Java, Python
 - Microsoft Excel (Data Visualization)
+- Beginner Web Technologies: HTML, CSS, JavaScript
 
 ---
 
@@ -39,9 +49,8 @@
 
 ## 🏅 Achievements
 
+- Runner-up in <b>IDEATHON</b>, BGSIT, Nagamangala
 
-  Runner-up in <b>IDEATHON</b>, BGSIT, Nagamangala
-  
 ---
 
 ## 🛠 Projects & Internships
@@ -77,7 +86,7 @@ Languages: English, Kannada, Hindi
     <img src="https://img.icons8.com/color/48/000000/gmail--v1.png" alt="Gmail" width="40"/>
   </a>
   &nbsp;
-  <a href="tel:+919663125670">
-    <img src="https://img.icons8.com/color/48/000000/phone.png" alt="Phone" width="40"/>
+  <a href="https://wa.me/919663125670" target="_blank">
+    <img src="https://img.icons8.com/color/48/000000/whatsapp.png" alt="WhatsApp" width="40"/>
   </a>
 </p>
