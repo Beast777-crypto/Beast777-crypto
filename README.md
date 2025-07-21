@@ -40,8 +40,8 @@
 ## 🏅 Achievements
 
 
- <b> Runner-up in </b><b><b>IDEATHON</b></b><b>, BGSIT, Nagamangala
-</b>
+  Runner-up in <b>IDEATHON</b>, BGSIT, Nagamangala
+  
 ---
 
 ## 🛠 Projects & Internships
