@@ -1,0 +1,141 @@
+#include <Wire.h>                 // I2C core [7][10]
+#include <LiquidCrystal_I2C.h>    // For PCF8574 I2C backpack LCD [7][10]
+
+// Adjust this to your LCD backpack I2C address (commonly 0x27 or 0x3F)
+#define LCD_ADDR 0x27             // PCF8574 I2C address [7][10]
+LiquidCrystal_I2C lcd(LCD_ADDR, 16, 2); // 16x2 LCD [7][10]
+
+// Analog input pins for 4 flex sensors
+const uint8_t FLEX_PINS[4] = {A0, A1, A2, A3}; // Arduino ADC pins [6][11]
+
+// Calibration values per finger
+int straightVal[4];  // average value when finger straight [6][11]
+int bentVal[4];      // average value when finger bent [6][11]
+int thresholdVal[4]; // midpoint threshold per finger [5][6]
+
+// Hysteresis to avoid rapid flickering near threshold (in ADC units)
+const int HYST = 10; // ~50 mV at 5V reference (10 * 4.9 mV) [12]
+
+// Number of samples to average for calibration and runtime readings
+const int CAL_SAMPLES = 20;
+const int RUN_SAMPLES = 5;
+
+// Determines if a higher ADC value means more bend (depends on resistor divider)
+bool bendIsHigher[4];
+
+// Read and average nSamples from an analog pin
+int readAveraged(uint8_t pin, int nSamples) {
+  long sum = 0;
+  for (int i = 0; i < nSamples; i++) {
+    sum += analogRead(pin);
+    delay(2);
+  }
+  return sum / nSamples;
+}
+
+// Compute threshold and bending direction for each finger from calibration
+void computeThresholds() {
+  for (int i = 0; i < 4; i++) {
+    thresholdVal[i] = (straightVal[i] + bentVal[i]) / 2;
+    bendIsHigher[i] = (bentVal[i] > straightVal[i]);
+  }
+}
+
+// Display two lines on LCD
+void showLine(const char* line1, const char* line2) {
+  lcd.clear();
+  lcd.setCursor(0, 0); lcd.print(line1);
+  lcd.setCursor(0, 1); lcd.print(line2);
+}
+
+// Interactive calibration process
+void calibrate() {
+  lcd.backlight();
+  showLine("Calibration", "Hold STRAIGHT");
+  delay(2000);
+  for (int i = 0; i < 4; i++) {
+    straightVal[i] = readAveraged(FLEX_PINS[i], CAL_SAMPLES);
+  }
+  showLine("Calibration", "Bend FULL");
+  delay(2000);
+  for (int i = 0; i < 4; i++) {
+    bentVal[i] = readAveraged(FLEX_PINS[i], CAL_SAMPLES);
+  }
+  computeThresholds();
+  lcd.clear();
+  lcd.setCursor(0,0); lcd.print("Calib done");
+  lcd.setCursor(0,1); lcd.print("Ready");
+  delay(1000);
+}
+
+// Determine bent/straight for each finger applying hysteresis and return pattern bits
+uint8_t classifyPattern(const int values[4], uint8_t lastPattern) {
+  uint8_t pattern = 0;
+  for (int i = 0; i < 4; i++) {
+    bool lastBent = (lastPattern >> i) & 0x1;
+    int th = thresholdVal[i];
+    int lowTh = th - HYST;
+    int highTh = th + HYST;
+    bool bent;
+    if (bendIsHigher[i]) {
+      if (values[i] > highTh) bent = true;
+      else if (values[i] < lowTh) bent = false;
+      else bent = lastBent;
+    } else {
+      if (values[i] < lowTh) bent = true;
+      else if (values[i] > highTh) bent = false;
+      else bent = lastBent;
+    }
+    if (bent) pattern |= (1 << i);
+  }
+  return pattern;
+}
+
+// Map the 4-bit pattern to a gesture label using switch-case
+const char* lookupGesture(uint8_t pattern) {
+  switch (pattern) {
+    case 0b0000:
+      return "OPEN HAND";
+    case 0b1111:
+      return "FIST";
+    case 0b1000:
+      return "INDEX BEND";
+    case 0b0100:
+      return "MIDDLE BEND";
+    case 0b0010:
+      return "RING BEND";
+    case 0b0001:
+      return "LITTLE BEND";
+    case 0b1100:
+      return "PEACE";
+    case 0b0011:
+      return "RING+LITTLE";
+    default:
+      return "UNKNOWN";
+  }
+}
+
+void setup() {
+  Wire.begin();
+  lcd.init();
+  lcd.backlight();
+  for (int i = 0; i < 4; i++) pinMode(FLEX_PINS[i], INPUT);
+  calibrate();
+}
+
+void loop() {
+  static uint8_t lastPattern = 0;
+  int vals[4];
+  for (int i = 0; i < 4; i++) {
+    vals[i] = readAveraged(FLEX_PINS[i], RUN_SAMPLES);
+  }
+  uint8_t pattern = classifyPattern(vals, lastPattern);
+  if (pattern != lastPattern) {
+    const char* label = lookupGesture(pattern);
+    lcd.clear();
+    lcd.setCursor(0, 0); lcd.print("Gesture:");
+    lcd.setCursor(0, 1); lcd.print(label);
+    lastPattern = pattern;
+  }
+  delay(50);
+}
